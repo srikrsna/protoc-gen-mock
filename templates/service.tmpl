@@ -1,0 +1,13 @@
+{{ define "Service" }}{{ $serviceName := .Name }}
+
+// Base{{ $serviceName }} is the dummy implementation of the {{ $serviceName }}. Embed this into your own implementation
+// to add new methods without breaking builds.
+type Base{{ $serviceName }} struct {}
+
+{{ range .Methods -}}
+// {{ .Name }} is an unimplemented form of the method {{ .Name }}
+func (Base{{ $serviceName }}) {{ .Name }}(context.Context, {{ .Input }}) ({{ .Output }}, error) {
+    return nil, status.Error(codes.Unimplemented, codes.Unimplemented.String())
+}
+{{end}}
+{{ end }}
