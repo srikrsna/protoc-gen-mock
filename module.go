@@ -21,7 +21,7 @@ func (m *defaultGen) InitContext(c pgs.BuildContext) {
 
 func (m *defaultGen) Execute(targets map[string]pgs.File, packages map[string]pgs.Package) []pgs.Artifact {
 	for _, file := range targets {
-		name := m.Context.OutputPath(file).SetExt(".def.go").String()
+		name := m.Context.OutputPath(file).SetExt(".mc.go").String()
 
 		fm := fileModel{
 			Package: m.Context.PackageName(file).String(),
@@ -37,8 +37,8 @@ func (m *defaultGen) Execute(targets map[string]pgs.File, packages map[string]pg
 			for _, method := range service.Methods() {
 				mb := methodModel{
 					Name:   m.Context.Name(method).String(),
-					Input:  "*" + m.Context.Name(method.Input()).String(),
-					Output: "*" + m.Context.Name(method.Output()).String(),
+					Input:  m.Context.Name(method.Input()).String(),
+					Output: m.Context.Name(method.Output()).String(),
 				}
 
 				if !method.Input().BuildTarget() {
@@ -47,7 +47,7 @@ func (m *defaultGen) Execute(targets map[string]pgs.File, packages map[string]pg
 						Value: path,
 					}
 
-					mb.Input = "*"+ m.Context.PackageName(method.Input()).String() + "." + m.Context.Name(method.Input()).String()
+					mb.Input = m.Context.PackageName(method.Input()).String() + "." + m.Context.Name(method.Input()).String()
 				}
 
 				if !method.Output().BuildTarget() {
@@ -56,7 +56,7 @@ func (m *defaultGen) Execute(targets map[string]pgs.File, packages map[string]pg
 						Value: path,
 					}
 
-					mb.Output = "*"+ m.Context.PackageName(method.Output()).String() + "." + m.Context.Name(method.Output()).String()
+					mb.Output = m.Context.PackageName(method.Output()).String() + "." + m.Context.Name(method.Output()).String()
 				}
 
 				sm.Methods = append(sm.Methods, mb)

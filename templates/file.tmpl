@@ -4,13 +4,15 @@
 package {{ .Package }}
 
 import (
-    "google.golang.org/grpc/codes"
-    "google.golang.org/grpc/status"
+    "github.com/google/gofuzz"
     "context"
     {{ range .Imports }}
     {{ .Key }} "{{ .Value }}"
     {{ end }}
 )
+
+var fuzzer = fuzz.New()
+
 {{ range .Services }}{{ template "Service" . }}{{ end }}
 
 {{ end }}

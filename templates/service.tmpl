@@ -1,13 +1,15 @@
 {{ define "Service" }}{{ $serviceName := .Name }}
 
-// Base{{ $serviceName }} is the dummy implementation of the {{ $serviceName }}. Embed this into your own implementation
-// to add new methods without breaking builds.
-type Base{{ $serviceName }} struct {}
+// Mock{{ $serviceName }} is the mock implementation of the {{ $serviceName }}. Use this to create mock services that
+// return random data. Useful in UI Testing.
+type Mock{{ $serviceName }} struct {}
 
-{{ range .Methods -}}
-// {{ .Name }} is an unimplemented form of the method {{ .Name }}
-func (Base{{ $serviceName }}) {{ .Name }}(context.Context, {{ .Input }}) ({{ .Output }}, error) {
-    return nil, status.Error(codes.Unimplemented, codes.Unimplemented.String())
+{{ range .Methods -}}{{- /*gotype: github.com/srikrsna/protoc-gen-mock.methodModel*/ -}}
+// {{ .Name }} is mock implementation of the method {{ .Name }}
+func (Mock{{ $serviceName }}) {{ .Name }}(context.Context, *{{ .Input }}) (*{{ .Output }}, error) {
+    var res {{ .Output }}
+    fuzzer.Fuzz(&res)
+    return &res, nil
 }
 {{end}}
 {{ end }}
