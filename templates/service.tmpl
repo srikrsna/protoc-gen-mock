@@ -8,7 +8,7 @@ type Mock{{ $serviceName }} struct {}
 // {{ .Name }} is mock implementation of the method {{ .Name }}
 func (Mock{{ $serviceName }}) {{ .Name }}(context.Context, *{{ .Input }}) (*{{ .Output }}, error) {
     var res {{ .Output }}
-    fuzzer.Fuzz(&res)
+    // fuzzer.Fuzz(&res) // commenting for empty object as discussed
     return &res, nil
 }
 {{end}}
