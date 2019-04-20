@@ -1,6 +1,7 @@
 module github.com/srikrsna/protoc-gen-mock
 
 require (
+	github.com/bxcodec/faker v2.0.1+incompatible // indirect
 	github.com/gobuffalo/packr v1.13.7
 	github.com/golang/protobuf v1.2.0
 	github.com/google/gofuzz v1.0.0

@@ -4,14 +4,13 @@
 package {{ .Package }}
 
 import (
-    "github.com/google/gofuzz"
+    "github.com/bxcodec/faker"
     "context"
     {{ range .Imports }}
     {{ .Key }} "{{ .Value }}"
     {{ end }}
 )
 
-var fuzzer = fuzz.New()
 
 {{ range .Services }}{{ template "Service" . }}{{ end }}
 
