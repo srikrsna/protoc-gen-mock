@@ -2,7 +2,9 @@
 
 package main
 
-import "github.com/magefile/mage/sh"
+import (
+	"github.com/magefile/mage/sh"
+)
 
 func BuildExample() error {
 	return sh.Run(
